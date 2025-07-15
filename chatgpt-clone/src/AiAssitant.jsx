@@ -169,6 +169,57 @@ const GameWebsite = () => {
         </div>
       </section>
 
+      {/* About Us Section */}
+      <section id="about" className="relative py-20 px-4 flex flex-col items-center" style={{ backgroundImage: `url(${require('./Images/banner.jpeg')})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-black/80 to-blue-950/80 pointer-events-none" />
+        <div className="w-full max-w-3xl bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-cyan-400/20 p-10 text-center z-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-blue-500 bg-clip-text text-transparent">About Us</h2>
+          <p className="text-lg text-gray-300 mb-8">We are passionate about bridging the gap between humans and artificial intelligence. Our mission is to create a safe, innovative, and engaging digital universe where everyone can benefit from the power of AI.</p>
+          <div className="flex flex-col md:flex-row justify-center gap-8 mt-6">
+            <div className="flex-1 bg-gray-900/70 rounded-xl p-6 border border-cyan-400/10 shadow-md">
+              <h3 className="text-xl font-semibold text-cyan-300 mb-2">Our Vision</h3>
+              <p className="text-gray-400">Empowering people with accessible, ethical, and creative AI solutions for a better tomorrow.</p>
+            </div>
+            <div className="flex-1 bg-gray-900/70 rounded-xl p-6 border border-fuchsia-400/10 shadow-md">
+              <h3 className="text-xl font-semibold text-fuchsia-300 mb-2">Our Values</h3>
+              <ul className="text-gray-400 list-disc list-inside space-y-1 text-left">
+                <li>Innovation & Curiosity</li>
+                <li>Privacy & Security</li>
+                <li>Inclusivity & Diversity</li>
+                <li>Transparency & Trust</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Mobile App Section */}
+      <section id="mobile-app" className="relative py-20 px-4 flex justify-center items-center bg-gradient-to-br from-gray-900 via-black to-blue-950">
+        <div className="w-full max-w-5xl flex flex-col md:flex-row items-center gap-12 bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-cyan-400/20 p-10">
+          <div className="flex-1 flex justify-center items-center">
+            <img src={require('./Images/mobileapp.jpeg')} alt="Mobile App" className="w-64 h-96 object-cover rounded-2xl shadow-lg border-2 border-cyan-400/20" />
+          </div>
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-blue-500 bg-clip-text text-transparent">Our Mobile App</h2>
+            <p className="text-lg text-gray-300 mb-6">Experience the power of our AI assistant on the go! Our mobile app brings all the features you love right to your fingertips, with a sleek and intuitive interface designed for productivity and fun.</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-6">
+              {/* Apple App Store */}
+              <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-3 rounded-lg bg-black/80 hover:bg-black/90 border border-gray-700 shadow-lg transition">
+                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.564 13.222c.012-2.043 1.668-3.021 1.742-3.066-0.951-1.389-2.426-1.58-2.946-1.601-1.252-.127-2.444.735-3.081.735-.637 0-1.617-.717-2.664-.697-1.37.02-2.637.796-3.342 2.025-1.426 2.47-.364 6.116 1.025 8.12.68.98 1.486 2.08 2.547 2.04 1.03-.04 1.418-.66 2.664-.66 1.246 0 1.59.66 2.664.64 1.104-.02 1.797-1 2.473-1.98.78-1.13 1.104-2.23 1.114-2.29-.024-.012-2.14-.82-2.153-3.25zm-2.53-6.01c.56-.68.94-1.63.84-2.57-.81.03-1.78.54-2.36 1.22-.52.6-.98 1.56-.81 2.48.86.07 1.77-.44 2.33-1.13z"/></svg>
+                <span className="text-white font-semibold text-base">App Store</span>
+              </a>
+              {/* Google Play Store */}
+              <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-3 rounded-lg bg-black/80 hover:bg-black/90 border border-gray-700 shadow-lg transition">
+                <svg className="w-6 h-6 text-green-400" viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 1.8l12.7 7.3-3.8 3.8-8.9-5.1c-.5-.3-.5-1 0-1.3zm16.2 9.3c.5.3.5 1 0 1.3l-2.7 1.5-3.2-3.2 3.2-3.2 2.7 1.6zm-16.2 10.1c-.5-.3-.5-1 0-1.3l8.9-5.1 3.8 3.8-12.7 7.3zm14.2-7.3l-3.2 3.2-3.2-3.2 3.2-3.2 3.2 3.2z"/></svg>
+                <span className="text-white font-semibold text-base">Google Play</span>
+              </a>
+            </div>
+            <button className="inline-block px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-blue-500 text-white font-bold text-lg shadow-lg hover:from-cyan-500 hover:to-blue-600 transition-all">Download Now</button>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Us Section */}
       <section id="contact" className="relative py-20 px-4 flex justify-center items-center bg-gradient-to-br from-gray-900 via-black to-blue-950">
         <div className="w-full max-w-2xl bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-cyan-400/20 p-10">
