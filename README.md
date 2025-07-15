@@ -66,7 +66,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 For questions, suggestions, or collaboration, feel free to reach out:
 
 - **Name:** Praveen
-- **GitHub:** [your-username](https://github.com/praveenpramodh2002)
+- **GitHub:** (https://github.com/praveenpramodh2002)
 - **Email:** praveenpramodh2002@gmail.com
 
 Feel free to explore and contribute!
