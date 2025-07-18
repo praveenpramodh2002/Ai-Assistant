@@ -63,19 +63,14 @@ const GameWebsite = () => {
   const [dontShow, setDontShow] = useState(false);
 
   // Update <html lang> attribute when language changes
-  useEffect(() => {
-    document.documentElement.lang = language;
-  }, [language]);
+  
 
-  // Remove autoplay, play on user interaction
-  // const handleWelcome = () => {
-  //   if (!muted) {
-  //     const audio = new Audio(require('../src/audio/ai voice.mp3'));
-  //     audio.play();
-  //   }
-  //   setShowWelcome(false);
-  // };
+  
   const handleWelcome = () => {
+    if (!muted) {
+      const audio = new Audio(require('./audio/ai voice.mp3'));
+      audio.play();
+    }
     setShowWelcome(false);
   };
 
