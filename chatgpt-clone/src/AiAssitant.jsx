@@ -68,68 +68,44 @@ const GameWebsite = () => {
   }, [language]);
 
   // Remove autoplay, play on user interaction
+  // const handleWelcome = () => {
+  //   if (!muted) {
+  //     const audio = new Audio(require('../src/audio/ai voice.mp3'));
+  //     audio.play();
+  //   }
+  //   setShowWelcome(false);
+  // };
   const handleWelcome = () => {
-    if (!muted) {
-      const audio = new Audio(require('../src/audio/ai voice.mp3'));
-      audio.play();
-    }
     setShowWelcome(false);
   };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      {/* Welcome Overlay */}
+      {/* Video Intro Overlay */}
       {showWelcome && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xl">
-          <div
-            className="relative bg-white/10 px-16 py-12 rounded-3xl shadow-[0_8px_40px_0_#00fff7cc] border-4 border-transparent flex flex-col items-center justify-center overflow-hidden max-w-4xl w-full h-72 before:content-[''] before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-cyan-400/20 before:via-fuchsia-400/10 before:to-blue-400/20 before:blur-2xl after:content-[''] after:absolute after:inset-0 after:rounded-3xl after:border-2 after:border-cyan-400/40 after:pointer-events-none"
-            style={{ backgroundImage: `url(${require('./Images/load.jpeg')})`, backgroundSize: 'cover', backgroundPosition: 'center', boxShadow: '0 0 32px 0 #00fff7cc, 0 2px 32px 0 #ff00ea33' }}
-          >
-            {/* Glassy overlay for readability */}
-            <div className="absolute inset-0 bg-black/30 backdrop-blur rounded-3xl" />
-            {/* Animated shine overlay */}
-            <div className="absolute inset-0 rounded-3xl pointer-events-none animate-pulse bg-gradient-to-br from-cyan-400/10 via-fuchsia-400/10 to-blue-400/10" />
-            <div className="relative z-10 flex flex-col items-center">
-              <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-blue-500 bg-clip-text text-transparent drop-shadow-[0_0_16px_#00fff7]">Welcome to AI Assistant</h2>
-              <p className="text-base text-gray-200 mb-4 max-w-xl text-center">Step into the future of conversation. Our AI Assistant connects you with advanced, secure, and multilingual AI in a vibrant digital world.</p>
-              {/* Advanced Options */}
-              <div className="flex flex-wrap gap-4 mb-6 items-center justify-center">
-                {/* Language Selector */}
-                <div className="flex items-center gap-1">
-                  <label className="text-sm text-gray-200">Language:</label>
-                  <select value={language} onChange={e => setLanguage(e.target.value)} className="rounded px-2 py-1 bg-gray-800/80 text-white border border-cyan-400/20 focus:outline-none">
-                    <option value="en">English</option>
-                    <option value="hi">Hindi</option>
-                    <option value="es">Spanish</option>
-                  </select>
-                </div>
-                {/* Mute/Unmute Toggle */}
-                <button onClick={() => setMuted(m => !m)} className="flex items-center gap-1 px-2 py-1 rounded bg-gray-800/80 border border-cyan-400/20 text-white hover:bg-cyan-400/20 transition">
-                  {muted ? (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 9v6h4l5 5V4l-5 5H9z" /><line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" strokeWidth="2" /></svg>
-                  ) : (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 9v6h4l5 5V4l-5 5H9z" /></svg>
-                  )}
-                  <span className="text-xs">{muted ? 'Muted' : 'Audio'}</span>
-                </button>
-                {/* Don't Show Again Checkbox */}
-                <label className="flex items-center gap-1 text-xs text-gray-200 cursor-pointer select-none">
-                  <input type="checkbox" checked={dontShow} onChange={e => setDontShow(e.target.checked)} className="accent-cyan-400" />
-                  Don't show again
-                </label>
-              </div>
-              <button
-                onClick={handleWelcome}
-                className="mt-4 px-10 py-3 rounded-xl font-orbitron font-bold bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-blue-500 text-white shadow-xl hover:from-cyan-500 hover:to-blue-600 transition-all text-lg ring-2 ring-cyan-400/40 ring-offset-2 ring-offset-black animate-glow"
-              >
-                Enter Site
-              </button>
-            </div>
-            <style>{`
-              @keyframes glow { 0%,100%{box-shadow:0 0 16px #00fff7cc,0 2px 16px #ff00ea33;} 50%{box-shadow:0 0 32px #00fff7cc,0 2px 32px #ff00ea33;} }
-              .animate-glow { animation: glow 2s infinite alternate; }
-            `}</style>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src={require("./video/intro2.mp4")}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+          <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
+            {/* Glassmorphism Enter Site Button */}
+            <button
+              onClick={handleWelcome}
+              className="px-12 py-4 rounded-2xl font-orbitron font-bold text-lg text-white backdrop-blur-md bg-white/10 border border-cyan-400/30 shadow-[0_4px_32px_0_#00fff7cc] hover:bg-cyan-400/20 hover:text-cyan-100 transition-all duration-300 ring-2 ring-cyan-400/30 ring-offset-2 ring-offset-black animate-glow"
+              style={{boxShadow: '0 0 32px 0 #00fff7cc, 0 2px 32px 0 #ff00ea33'}}
+            >
+              Enter Site
+            </button>
           </div>
+          <style>{`
+            @keyframes glow { 0%,100%{box-shadow:0 0 16px #00fff7cc,0 2px 16px #ff00ea33;} 50%{box-shadow:0 0 32px #00fff7cc,0 2px 32px #ff00ea33;} }
+            .animate-glow { animation: glow 2s infinite alternate; }
+          `}</style>
         </div>
       )}
       {/* Navigation Bar */}
@@ -205,101 +181,25 @@ const GameWebsite = () => {
       {/* Spacer for navbar */}
       <div className="h-16 md:h-[68px]" />
       {/* Hero Section - Cyber World Design */}
-      <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-blue-950 overflow-hidden">
-        {/* Animated Neon Grid */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <svg className="w-full h-full" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Vertical grid lines */}
-            {[...Array(15)].map((_, i) => (
-              <line
-                key={`v-${i}`}
-                x1={(i * 96)}
-                y1="0"
-                x2={(i * 96)}
-                y2="900"
-                stroke="#00fff7"
-                strokeWidth="1"
-                opacity="0.08"
-              />
-            ))}
-            {/* Horizontal grid lines */}
-            {[...Array(10)].map((_, i) => (
-              <line
-                key={`h-${i}`}
-                x1="0"
-                y1={(i * 90)}
-                x2="1440"
-                y2={(i * 90)}
-                stroke="#00fff7"
-                strokeWidth="1"
-                opacity="0.08"
-              />
-            ))}
-            {/* Circuit/Network lines */}
-            <polyline points="100,800 300,700 500,750 700,600 900,650 1200,500" fill="none" stroke="#ff00ea" strokeWidth="3" opacity="0.25" strokeDasharray="12 8"/>
-            <polyline points="200,200 400,300 600,250 800,400 1000,350 1300,200" fill="none" stroke="#00fff7" strokeWidth="2" opacity="0.18" strokeDasharray="10 6"/>
-          </svg>
-          {/* Neon glow overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-fuchsia-500/10 to-blue-700/10 blur-2xl" />
-        </div>
-        <div className="text-center px-4 z-10">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Video Background */}
+        <video
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          src={require('./video/i1.mp4')}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-black/40 z-10" />
+        <div className="text-center px-4 z-20 w-full">
           <h1 className="text-6xl md:text-8xl font-extrabold mb-6 tracking-widest animate-text bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-blue-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_#00fff7] font-mono uppercase">
             Enter the Cyber World
           </h1>
           <p className="text-2xl md:text-3xl mb-8 max-w-2xl mx-auto text-cyan-200 font-mono drop-shadow-[0_0_8px_#00fff7]">
             Where AI and humans connect in a neon digital universe.
           </p>
-        </div>
-        {/* Animated Neon Orbs */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-cyan-400 opacity-30 blur-2xl animate-pulse"></div>
-          <div className="absolute top-1/2 right-1/3 w-40 h-40 rounded-full bg-fuchsia-500 opacity-20 blur-3xl animate-ping"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-24 h-24 rounded-full bg-blue-400 opacity-30 blur-2xl animate-bounce"></div>
-        </div>
-        {/* Robot SVG Illustration */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-          <style>{`
-            @keyframes robot-bob {
-              0%, 100% { transform: translateY(0); }
-              50% { transform: translateY(-12px); }
-            }
-            @keyframes robot-blink {
-              0%, 92%, 100% { transform: scaleY(1); }
-              95% { transform: scaleY(0.1); }
-              97% { transform: scaleY(1); }
-            }
-            @keyframes robot-antenna-pulse {
-              0%, 100% { opacity: 0.7; r: 6; }
-              50% { opacity: 1; r: 10; }
-            }
-          `}</style>
-          <svg width="160" height="180" viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg"
-            style={{ animation: 'robot-bob 3s ease-in-out infinite' }}>
-            {/* Head */}
-            <ellipse cx="80" cy="60" rx="45" ry="40" fill="#18181b" stroke="#00fff7" strokeWidth="4"/>
-            {/* Eyes (with blink) */}
-            <g style={{ transformOrigin: '65px 60px', animation: 'robot-blink 4s infinite' }}>
-              <ellipse cx="65" cy="60" rx="7" ry="10" fill="#00fff7" opacity="0.85"/>
-            </g>
-            <g style={{ transformOrigin: '95px 60px', animation: 'robot-blink 4s infinite', animationDelay: '0.2s' }}>
-              <ellipse cx="95" cy="60" rx="7" ry="10" fill="#00fff7" opacity="0.85"/>
-            </g>
-            {/* Mouth */}
-            <rect x="70" y="80" width="20" height="6" rx="3" fill="#00fff7" opacity="0.5"/>
-            {/* Antenna */}
-            <rect x="77" y="18" width="6" height="20" rx="3" fill="#00fff7"/>
-            <circle cx="80" cy="16" r="6" fill="#00fff7" opacity="0.7"
-              style={{ transformOrigin: '80px 16px', animation: 'robot-antenna-pulse 1.5s infinite' }}
-            />
-            {/* Body */}
-            <rect x="45" y="100" width="70" height="50" rx="18" fill="#18181b" stroke="#00fff7" strokeWidth="4"/>
-            {/* Arms */}
-            <rect x="20" y="110" width="20" height="10" rx="5" fill="#00fff7" opacity="0.3"/>
-            <rect x="120" y="110" width="20" height="10" rx="5" fill="#00fff7" opacity="0.3"/>
-            {/* Body lights */}
-            <circle cx="80" cy="125" r="6" fill="#00fff7" opacity="0.7"/>
-            <rect x="65" y="140" width="30" height="8" rx="4" fill="#00fff7" opacity="0.2"/>
-          </svg>
         </div>
       </section>
 
