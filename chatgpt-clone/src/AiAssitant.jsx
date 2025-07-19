@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const GameWebsite = () => {
   // AI feature data
@@ -61,6 +61,46 @@ const GameWebsite = () => {
   const [language, setLanguage] = useState('en');
   const [muted, setMuted] = useState(false);
   const [dontShow, setDontShow] = useState(false);
+  const [showAccountPopup, setShowAccountPopup] = useState(false);
+  // Draggable popup state
+  const [popupPos, setPopupPos] = useState({ x: window.innerWidth / 2 - 240, y: window.innerHeight / 2 - 220 });
+  const [dragging, setDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const popupRef = useRef();
+
+  // Mouse event handlers for dragging
+  const handleMouseDown = (e) => {
+    setDragging(true);
+    const rect = popupRef.current.getBoundingClientRect();
+    setDragOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    e.preventDefault();
+  };
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!dragging) return;
+      let newX = e.clientX - dragOffset.x;
+      let newY = e.clientY - dragOffset.y;
+      // Keep within viewport
+      newX = Math.max(0, Math.min(newX, window.innerWidth - 400));
+      newY = Math.max(0, Math.min(newY, window.innerHeight - 400));
+      setPopupPos({ x: newX, y: newY });
+    };
+    const handleMouseUp = () => setDragging(false);
+    if (dragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [dragging, dragOffset]);
+  // Reset position when popup opens
+  useEffect(() => {
+    if (showAccountPopup) {
+      setPopupPos({ x: window.innerWidth / 2 - 240, y: window.innerHeight / 2 - 220 });
+    }
+  }, [showAccountPopup]);
 
   // Update <html lang> attribute when language changes
   
@@ -88,13 +128,21 @@ const GameWebsite = () => {
             playsInline
           />
           <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
-            {/* Glassmorphism Enter Site Button */}
+            {/* Modern Animated Gradient Enter Site Button moved to bottom left */}
             <button
               onClick={handleWelcome}
-              className="px-12 py-4 rounded-2xl font-orbitron font-bold text-lg text-white backdrop-blur-md bg-white/10 border border-cyan-400/30 shadow-[0_4px_32px_0_#00fff7cc] hover:bg-cyan-400/20 hover:text-cyan-100 transition-all duration-300 ring-2 ring-cyan-400/30 ring-offset-2 ring-offset-black animate-glow"
+              className="fixed left-8 bottom-8 md:left-16 md:bottom-16 flex items-center gap-3 px-12 py-4 rounded-2xl font-orbitron font-bold text-lg text-white bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-blue-500 shadow-lg transition-transform duration-300 transform hover:scale-105 focus:scale-105 focus:outline-none overflow-hidden group z-50"
               style={{boxShadow: '0 0 32px 0 #00fff7cc, 0 2px 32px 0 #ff00ea33'}}
             >
-              Enter Site
+              <span className="z-10">Enter Site</span>
+              <span className="z-10 transition-transform duration-300 group-hover:translate-x-2 group-hover:scale-110">
+                {/* Arrow Icon */}
+                <svg className="w-7 h-7 text-white drop-shadow-[0_0_8px_#00fff7]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
+              {/* Animated Gradient Overlay */}
+              <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-blue-500 opacity-30 blur-lg group-hover:opacity-50 transition-all duration-300" />
             </button>
           </div>
           <style>{`
@@ -133,7 +181,7 @@ const GameWebsite = () => {
               </button>
             ) : (
               <button
-                onClick={() => setIsLoggedIn(false)}
+                onClick={() => setShowAccountPopup(true)}
                 className="focus:outline-none"
                 aria-label="Profile"
               >
@@ -175,6 +223,43 @@ const GameWebsite = () => {
       </nav>
       {/* Spacer for navbar */}
       <div className="h-16 md:h-[68px]" />
+      {/* User Account Popup */}
+      {showAccountPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={() => setShowAccountPopup(false)}>
+          <div
+            ref={popupRef}
+            className="relative bg-white/90 rounded-2xl shadow-2xl border border-cyan-400/30 p-8 w-full max-w-md text-gray-900 cursor-move select-none"
+            onMouseDown={handleMouseDown}
+            onClick={e => e.stopPropagation()}
+            style={{ left: popupPos.x, top: popupPos.y, position: 'fixed', margin: 0 }}
+          >
+            <button className="absolute top-3 right-3 text-gray-400 hover:text-fuchsia-500 text-2xl font-bold" onClick={() => setShowAccountPopup(false)} aria-label="Close">&times;</button>
+            <div className="flex flex-col items-center gap-4">
+              <span className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400 via-fuchsia-500 to-blue-500 flex items-center justify-center shadow-lg border-4 border-cyan-400/40">
+                <svg className="w-14 h-14 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <circle cx="12" cy="8" r="4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 20c0-2.21 3.58-4 8-4s8 1.79 8 4" />
+                </svg>
+              </span>
+              <div className="text-center">
+                <div className="text-xl font-bold text-cyan-600">John Doe</div>
+                <div className="text-sm text-gray-500 mb-2">johndoe@email.com</div>
+              </div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-gray-700 font-medium">Theme:</span>
+                <button className="px-3 py-1 rounded bg-cyan-400 text-white font-semibold hover:bg-cyan-500 transition">Light</button>
+                <button className="px-3 py-1 rounded bg-gray-900 text-white font-semibold hover:bg-gray-800 transition">Dark</button>
+              </div>
+              <button
+                onClick={() => { setIsLoggedIn(false); setShowAccountPopup(false); }}
+                className="w-full py-2 rounded-lg bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-blue-500 text-white font-bold shadow-lg hover:from-cyan-500 hover:to-blue-600 transition-all mt-2"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Hero Section - Cyber World Design */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Video Background */}
